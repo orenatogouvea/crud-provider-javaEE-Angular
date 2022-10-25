@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html ng-app="provider">
+<head>
+    <title>CRUD-PROVIDER</title>
+
+    <link rel="stylesheet" href="lib/dependencies/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/dependencies/css/ng-grid.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+
+    <script src="lib/dependencies/angular.min.js"></script>
+    <script src="lib/dependencies/angular-resource.min.js"></script>
+    <script src="lib/dependencies/jquery.min.js"></script>
+    <script src="lib/dependencies/ui-bootstrap-tpls.min.js"></script>
+    <script src="lib/dependencies/ng-grid.min.js"></script>
+    <script src="script/provider.js"></script>
+</head>
+
+<body>
+
+<h1>Java EE - Angular Application</h1>
+
+<br/>
+
+<br>
+
+<div class="grid" ng-controller="providerListController">
+    <div>
+        <h3>List Provider</h3>
+    </div>
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+
+    <pagination direction-links="true" boundary-links="true"
+                total-items="provider.totalResults" items-per-page="provider.pageSize"
+                ng-model="provider.currentPage" ng-change="refreshGrid()">
+    </pagination>
+</div>
+
+<div class="form" ng-controller="providerFormController">
+    <div ng-if="provider.id == null">
+        <h3>Add Provider</h3>
+    </div>
+
+<!--    <div ng-if="provider.id != null">-->
+<!--        <h3>Edit Provider</h3>-->
+<!--    </div>-->
+
+    <div>
+        <form name="providerForm" ng-submit="updateProvider()" novalidate>
+
+
+            <div class="form-group" ng-class="{'has-error' : providerForm.name.$invalid && providerForm.name.$dirty}">
+                <label for="name">Name:</label>
+
+                <span ng-class="{'glyphicon glyphicon-ok' : providerForm.name.$valid && providerForm.name.$dirty}"></span>
+
+                <input id="name" name="name" type="text" class="form-control" maxlength="50"
+                       ng-model="provider.name"
+                       required ng-minlength="2" ng-maxlength="50"/>
+
+
+                <p class="help-block" ng-show="providerForm.name.$error.required">Add Name.</p>
+            </div>
+
+
+            <div class="form-group" ng-class="{'has-error' : providerForm.email.$invalid && providerForm.email.$dirty}">
+                <label for="email">Email:</label>
+
+                <span ng-class="{'glyphicon glyphicon-ok' : providerForm.email.$valid && providerForm.email.$dirty}"></span>
+
+                <input id="email" name="email" type="text" class="form-control" maxlength="100"
+                       ng-model="provider.email"
+                       required ng-minlength="5" ng-maxlength="100"/>
+
+
+                <p class="help-block" ng-show="providerForm.email.$error.required">Add Email.</p>
+
+            </div>
+
+
+            <div class="form-group" ng-class="{'has-error' : providerForm.comment.$invalid && providerForm.comment.$dirty}">
+                <label for="comment">Comment:</label>
+
+                <span ng-class="{'glyphicon glyphicon-ok' : providerForm.comment.$valid && providerForm.comment.$dirty}"></span>
+
+                <input id="comment" name="comment" type="url" class="form-control" maxlength="500"
+                       ng-model="provider.comment"
+                       required/>
+
+                <p class="help-block" ng-show="providerForm.comment.$error.required">Add Comment.</p>
+
+            </div>
+
+            <div class="form-group" ng-class="{'has-error' : providerForm.cnpj.$invalid && providerForm.cnpj.$dirty}">
+                <label for="cnpj">CNPJ:</label>
+
+                <span ng-class="{'glyphicon glyphicon-ok' : providerForm.cnpj.$valid && providerForm.cnpj.$dirty}"></span>
+
+                <input id="cnpj" name="cnpj" type="url" class="form-control" maxlength="500"
+                       ng-model="provider.cnpj"
+                       required/>
+
+                <p class="help-block" ng-show="providerForm.cnpj.$error.required">Add CNPJ.</p>
+
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn btn-primary" ng-click="clearForm()">Clear</button>
+                <button type="submit" class="btn btn-primary" ng-disabled="providerForm.$invalid">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
